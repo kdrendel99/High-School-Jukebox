@@ -1,14 +1,14 @@
 import $ from 'jquery';
-import 'bootstrap';
-import 'bootstrap/dist/css/bootstrap.min.css';
 import './css/styles.css';
 import SpotifyService from './spotify-service.js';
 
+
 window.onload = setTimeout(function() {
   $('.card-landing').fadeOut("slow");
-}, 4000 );
+}, 1750 );
 
 $(document).ready( async function() {
+  $('.content').fadeIn("slow");
   const token = await testToken();
   const genreList = await SpotifyService.getGenres(token);
   genreList.genres.forEach(function(element){
@@ -71,9 +71,6 @@ async function outputSearch(genre,years) {
   const search = await SpotifyService.getSearch(token,genre,years);
   search.tracks.items.forEach(function(element) {
     $('.list').text(`Welcome ${name}. Feeling Nostalgic? Check out some ${genre} songs from high school!`);
-    $("#songList").append("<li>" + ` <iframe src="https://open.spotify.com/embed/track/${element.id}" align="center" width="600" height="100" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>` + `${element.album.release_date.slice(0,4)}`);
+    $("#songList").append("<li>" + `${element.album.release_date.slice(0,4)}` + ` <iframe src="https://open.spotify.com/embed/track/${element.id}" class="embedded_link" allow="encrypted-media">`);
   });
 } 
-
-
-
